@@ -17,8 +17,11 @@ public class ISBNwindow {
         inField.setBounds(20, 100, 80, 30);
         submitButton.setBounds(100, 100, 80, 30);
 
-        OuterActionListener o = new OuterActionListener(this);
-        submitButton.addActionListener(o);
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                inField.setText("Welcome");
+            }
+        });
 
         f.add(welcomeMessage);
         f.add(inField);
@@ -29,16 +32,4 @@ public class ISBNwindow {
         f.setVisible(true);
     }
 
-}
-
-class OuterActionListener implements ActionListener{
-    ISBNwindow i;
-
-    OuterActionListener(ISBNwindow i) {
-        this.i = i;
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        i.inField.setText("Welcome");
-    }
 }
