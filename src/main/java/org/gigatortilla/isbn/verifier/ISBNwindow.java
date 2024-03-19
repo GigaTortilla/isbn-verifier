@@ -1,21 +1,25 @@
 package org.gigatortilla.isbn.verifier;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener; 
+import java.awt.event.*; 
 
 public class ISBNwindow {
-    TextField inField;
-
     ISBNwindow() {
         Frame f = new Frame("ISBN Verifier");
         Label welcomeMessage = new Label("Welcome to the ISBN Verifier!");
-        inField = new TextField();
+        TextField inField = new TextField();
         Button submitButton = new Button("Submit");
 
-        welcomeMessage.setBounds(20, 70, 160, 30);
-        inField.setBounds(20, 100, 80, 30);
-        submitButton.setBounds(100, 100, 80, 30);
+        f.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent wEvent) {
+                f.dispose();
+            }
+        });
+
+        welcomeMessage.setBounds(100, 70, 200, 30);
+        welcomeMessage.setAlignment(Label.CENTER);
+        inField.setBounds(120, 100, 80, 30);
+        submitButton.setBounds(200, 100, 80, 30);
 
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -28,8 +32,12 @@ public class ISBNwindow {
         f.add(submitButton);
 
         f.setSize(400, 300);
+        f.setIconImage(null);
         f.setLayout(null);
         f.setVisible(true);
     }
-
+    
+    public void close() {
+        System.out.println("Window close method called.");
+    }
 }
