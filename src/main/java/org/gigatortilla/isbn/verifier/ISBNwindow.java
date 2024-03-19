@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener; 
 
-public class ISBNwindow implements ActionListener{
+public class ISBNwindow {
     TextField inField;
 
     ISBNwindow() {
@@ -17,7 +17,8 @@ public class ISBNwindow implements ActionListener{
         inField.setBounds(20, 100, 80, 30);
         submitButton.setBounds(100, 100, 80, 30);
 
-        submitButton.addActionListener(this);
+        OuterActionListener o = new OuterActionListener(this);
+        submitButton.addActionListener(o);
 
         f.add(welcomeMessage);
         f.add(inField);
@@ -28,7 +29,16 @@ public class ISBNwindow implements ActionListener{
         f.setVisible(true);
     }
 
+}
+
+class OuterActionListener implements ActionListener{
+    ISBNwindow i;
+
+    OuterActionListener(ISBNwindow i) {
+        this.i = i;
+    }
+
     public void actionPerformed(ActionEvent e) {
-        inField.setText("Welcome");
+        i.inField.setText("Welcome");
     }
 }
