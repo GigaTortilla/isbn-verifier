@@ -14,6 +14,14 @@ public class ISBN {
         return numberISBN13;
     }
 
+    public boolean getValidISBN10() {
+        return validISBN10;
+    }
+
+    public boolean getValidISBN13() {
+        return validISBN13;
+    }
+
     public void setISBN10(String numberISBN10) {
         int maxLen = (numberISBN10.length() < 10) ? numberISBN10.length() : 10;
         this.numberISBN10 = numberISBN10.substring(0, maxLen);
