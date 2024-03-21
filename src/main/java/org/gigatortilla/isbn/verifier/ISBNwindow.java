@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 
 public class ISBNwindow {
+    private ISBN stateISBN = new ISBN();
     private Frame mainWindowFrame;
     private int windowWidth = 400;
     private int windowHeight = 300;
@@ -20,13 +22,30 @@ public class ISBNwindow {
             mainWindowFrame.removeAll();
 
             Button returnButton = new Button("Back");
+            Button checkButton = new Button("Check");
             Label hintLabel = new Label("Please input the ISBN-10 number to check:", Label.LEFT);
             TextField inputNumberField = new TextField(10);
+            Label checkOutput = new Label("", Label.CENTER);
+
+            AbstractAction checkISBNAction = new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    stateISBN.setISBN10(inputNumberField.getText());
+                    stateISBN.setISBN10state();
+                    checkOutput.setText("The ISBN "
+                        + stateISBN.getISBN10()
+                        + " is "
+                        + stateISBN.getValidISBN10());
+                }
+            };
 
             returnButton.setBounds(320, 250, 60, 30);
+            checkButton.setBounds(140, 110, 80, 30);
+            checkButton.addActionListener(checkISBNAction);
             returnButton.setBackground(new Color(240, 240, 240));
             hintLabel.setBounds(50, 80, 250, 25);
+            checkOutput.setBounds(50, 150, 250, 25);
             inputNumberField.setBounds(50, 110, 80, 25);
+            inputNumberField.addActionListener(checkISBNAction);
 
             returnButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -36,6 +55,7 @@ public class ISBNwindow {
 
             mainWindowFrame.add(returnButton);
             mainWindowFrame.add(hintLabel);
+            mainWindowFrame.add(checkOutput);
             mainWindowFrame.add(inputNumberField);
         }
     };
