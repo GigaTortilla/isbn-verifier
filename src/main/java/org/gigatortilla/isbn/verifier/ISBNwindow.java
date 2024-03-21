@@ -31,10 +31,11 @@ public class ISBNwindow {
                 public void actionPerformed(ActionEvent e) {
                     stateISBN.setISBN10(inputNumberField.getText());
                     stateISBN.setISBN10state();
-                    checkOutput.setText("The ISBN "
-                        + stateISBN.getISBN10()
-                        + " is "
-                        + stateISBN.getValidISBN10());
+                    if(stateISBN.getValidISBN10()) {
+                        checkOutput.setText("This ISBN-10 is valid.");
+                    } else {
+                        checkOutput.setText("This number is not a valid ISBN-10.");
+                    }
                 }
             };
 
