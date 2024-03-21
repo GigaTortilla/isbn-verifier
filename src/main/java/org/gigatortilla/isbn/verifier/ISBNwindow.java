@@ -17,7 +17,7 @@ public class ISBNwindow {
     private int windowWidth = 400;
     private int windowHeight = 300;
 
-    private ActionListener switchISBN10validate = new ActionListener() {
+    private ActionListener sceneISBN10validate = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             mainWindowFrame.removeAll();
 
@@ -39,9 +39,12 @@ public class ISBNwindow {
             };
 
             returnButton.setBounds(320, 250, 60, 30);
-            checkButton.setBounds(140, 110, 80, 30);
-            checkButton.addActionListener(checkISBNAction);
             returnButton.setBackground(new Color(240, 240, 240));
+
+            checkButton.setBounds(140, 110, 80, 30);
+            checkButton.setBackground(new Color(240, 240, 240));
+            checkButton.addActionListener(checkISBNAction);
+
             hintLabel.setBounds(50, 80, 250, 25);
             checkOutput.setBounds(50, 150, 250, 25);
             inputNumberField.setBounds(50, 110, 80, 25);
@@ -54,13 +57,14 @@ public class ISBNwindow {
             });
 
             mainWindowFrame.add(returnButton);
+            mainWindowFrame.add(checkButton);
             mainWindowFrame.add(hintLabel);
             mainWindowFrame.add(checkOutput);
             mainWindowFrame.add(inputNumberField);
         }
     };
 
-    private ActionListener switchISBN13validate = new ActionListener() {
+    private ActionListener sceneISBN13validate = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             mainWindowFrame.removeAll();
 
@@ -133,8 +137,8 @@ public class ISBNwindow {
                 inField.setText("Lorem ipsum");
             }
         });
-        buttonISBN10verify.addActionListener(switchISBN10validate);
-        buttonISBN13verify.addActionListener(switchISBN13validate);
+        buttonISBN10verify.addActionListener(sceneISBN10validate);
+        buttonISBN13verify.addActionListener(sceneISBN13validate);
 
         mainWindowFrame.add(welcomeMessage);
         mainWindowFrame.add(inField);
