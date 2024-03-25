@@ -103,6 +103,11 @@ public class ISBN {
         }
     }
 
+    /** Calculates the check digit for ISBN-10 numbers.
+     * @param       inputString     the number to calculate the check digit for
+     * @return      the check digit as a {@code char}
+     */
+    // TODO: check for edge cases
     public static char calcCheckDigit10(String inputString) {
         int weight = 10;
         int buffer = 0;
@@ -119,7 +124,23 @@ public class ISBN {
         }
     }
 
+    /** Calculates the check digit for ISBN-13 numbers.
+     * @param       inputString     the number to calculate the check digit for
+     * @return      the check digit as a {@code char}
+     */
     public static char calcCheckDigit13(String inputString) {
-        return 0;
+        int sum = 0;
+        int result;
+        try {
+            for(int i = 0; i < 12; i++) {
+                sum += (inputString.charAt(i) - '0') * (i % 2 == 0 ? 1 : 3);
+            }
+            result = 10 - sum % 10;
+            return (char) ('0' + (result == 10 ? 0 : result));
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return '\0';
+        }
+        
     }
 }
