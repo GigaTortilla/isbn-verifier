@@ -103,11 +103,23 @@ public class ISBN {
         }
     }
 
-    protected static int calcCheckDigit10(String inputString) {
-        return 0;
+    public static char calcCheckDigit10(String inputString) {
+        int weight = 10;
+        int buffer = 0;
+        int result = 0;
+        for(char c : inputString.toCharArray()) {
+            buffer += weight * (c - '0');
+            weight--;
+        }
+        result = 11 - buffer % 11;
+        if(result == 10) {
+            return 'X';
+        } else {
+            return (char) ('0' + result);
+        }
     }
 
-    protected static int calcCheckDigit13(String inputString) {
+    public static char calcCheckDigit13(String inputString) {
         return 0;
     }
 }
