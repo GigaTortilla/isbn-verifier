@@ -1,5 +1,7 @@
 package org.gigatortilla.isbn.verifier;
 
+import java.math.BigInteger;
+
 public class ISBN {
     private String numberISBN10 = "";
     private String numberISBN13 = "";
@@ -75,7 +77,7 @@ public class ISBN {
 
         // Check if the input contains only numbers
         try {
-            Integer.parseInt(inputISBN);
+            new BigInteger(inputISBN);
 
             for(int i = 0; i < inputISBN.substring(0, 13).length(); i++) {
                 buffer += (inputISBN.charAt(i) - '0') * ((i % 2 == 0) ? 1 : 3);

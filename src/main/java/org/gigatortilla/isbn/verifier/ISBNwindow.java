@@ -73,6 +73,7 @@ public class ISBNwindow {
             hintLabel.setBounds(50, 80, 250, 25);
 
             Label checkOutputLabel = new Label("", Label.CENTER);
+            checkOutputLabel.setBounds(50, 150, 250, 25);
             TextField inputNumberField = new TextField(13);
             inputNumberField.setBounds(50, 110, 104, 25);
 
