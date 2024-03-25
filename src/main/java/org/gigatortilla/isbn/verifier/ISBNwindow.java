@@ -69,15 +69,34 @@ public class ISBNwindow {
         public void actionPerformed(ActionEvent e) {
             mainWindowFrame.removeAll();
 
-            Button returnButton = new Button("Back");
             Label hintLabel = new Label("Please input the ISBN-13 number to check:", Label.LEFT);
-            TextField inputNumberField = new TextField(13);
-
-            returnButton.setBounds(320, 250, 60, 30);
-            returnButton.setBackground(new Color(240, 240, 240));
             hintLabel.setBounds(50, 80, 250, 25);
+
+            Label checkOutputLabel = new Label("", Label.CENTER);
+            TextField inputNumberField = new TextField(13);
             inputNumberField.setBounds(50, 110, 104, 25);
 
+            AbstractAction checkISBNAction = new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    stateISBN.setISBN13(inputNumberField.getText());
+                    stateISBN.setISBN13state();
+                    if(stateISBN.getValidISBN13()) {
+                        checkOutputLabel.setText("This ISBN-13 is valid.");
+                    } else {
+                        checkOutputLabel.setText("This number is not a valid ISBN-13!");
+                    }
+                }
+            };
+            inputNumberField.addActionListener(checkISBNAction);
+
+            Button checkButton = new Button("Check");
+            checkButton.setBounds(170, 110, 80, 30);
+            checkButton.setBackground(new Color(240, 240, 240));
+            checkButton.addActionListener(checkISBNAction);
+
+            Button returnButton = new Button("Back");
+            returnButton.setBounds(320, 250, 60, 30);
+            returnButton.setBackground(new Color(240, 240, 240));
             returnButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     createStartupScreen();
@@ -87,6 +106,8 @@ public class ISBNwindow {
             mainWindowFrame.add(returnButton);
             mainWindowFrame.add(hintLabel);
             mainWindowFrame.add(inputNumberField);
+            mainWindowFrame.add(checkButton);
+            mainWindowFrame.add(checkOutputLabel);
         }
     };
 
