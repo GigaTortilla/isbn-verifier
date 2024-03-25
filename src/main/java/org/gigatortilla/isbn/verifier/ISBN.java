@@ -43,7 +43,7 @@ public class ISBN {
     // TODO: check for edge cases
     public static boolean checkISBN10(String inputISBN) {
         int buffer = 0;
-        if (inputISBN.length() < 10) {
+        if(inputISBN.length() < 10) {
             System.out.println("The string " + inputISBN + " is too short!");
             return false;
         }
@@ -67,7 +67,23 @@ public class ISBN {
     }
 
     public static boolean checkISBN13(String inputISBN) {
-        // TODO: Create static isbn validation
-        return false;
+        int buffer = 0;
+        if(inputISBN.length() < 13) {
+            System.out.println("The string " + inputISBN + " is too short!");
+            return false;
+        }
+
+        // Check if the input contains only numbers
+        try {
+            Integer.parseInt(inputISBN);
+
+            for(int i = 0; i < inputISBN.substring(0, 13).length(); i++) {
+                buffer += (inputISBN.charAt(i) - '0') * ((i % 2 == 0) ? 1 : 3);
+            }
+            return buffer % 10 == 0;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
