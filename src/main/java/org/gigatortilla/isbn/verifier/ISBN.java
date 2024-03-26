@@ -111,9 +111,15 @@ public class ISBN {
         }
 
         // No need to catch IndexOutOfBoundsException since at that point the string not be less than 10 characters long
-        if(inputISBN.substring(0, 10).contains("X") || inputISBN.substring(0, 10).contains("x")) {
-            if(inputISBN.indexOf('X') != 9 || inputISBN.indexOf('x') != 9) {
-                throw new IllegalArgumentException("The letter X was found in a position other than the last!");
+        if(inputISBN.substring(0, 10).contains("X") 
+            || inputISBN.substring(0, 10).contains("x")) {
+            int posUpperX = inputISBN.indexOf('X');
+            int posLowerX = inputISBN.indexOf('x');
+            if((posLowerX != 9 || posUpperX != -1) == (posLowerX != -1 || posUpperX != 9)) {
+                throw new IllegalArgumentException("The letter X was found in a position other than the last!\nX: " 
+                                                    + inputISBN.indexOf('X') 
+                                                    + "\tx: " 
+                                                    + inputISBN.indexOf('x'));
             }
         }
 
@@ -134,7 +140,8 @@ public class ISBN {
      * @param inputISBN     the {@code String} to be checked 
      * @return              {@code true} if the input {@code String} is valid, 
      *                      {@code false} if the input {@code String} is not a valid ISBN-13 number
-     * @throws IllegalArgumentException if the input {@code String} is too short. If it is too long everything past the 10th character is not used.
+     * @throws IllegalArgumentException if the input {@code String} is too short. 
+     *                                  If it is too long everything past the 10th character is not used.
      * @throws NumberFormatException if the input {@code String} contains non-numeric characters.
      */
     public static boolean checkISBN13(String inputISBN) {

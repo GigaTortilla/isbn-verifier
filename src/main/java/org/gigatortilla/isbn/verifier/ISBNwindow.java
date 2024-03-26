@@ -27,6 +27,7 @@ public class ISBNwindow {
             TextField inputNumberField = new TextField(10);
             Label checkOutput = new Label("", Label.CENTER);
 
+            // TODO: GUI representation of occured exceptions
             AbstractAction checkISBNAction = new AbstractAction() {
                 public void actionPerformed(ActionEvent e) {
                     stateISBN.setISBN10(inputNumberField.getText());
