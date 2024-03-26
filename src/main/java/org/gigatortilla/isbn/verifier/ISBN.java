@@ -94,6 +94,13 @@ public class ISBN {
         return buffer % 11 == 0;
     }
 
+    /**
+     * Checks if the input String is a valid ISBN-13 number.
+     * @param inputISBN     the {@code String} to be checked 
+     * @return              {@code true} if the input {@code String} is valid, 
+     *                      {@code false} if the input {@code String} is not a valid ISBN-13 number 
+     *                      or the {@code String} either is shorter than 3 digits or contains non-numeric characters
+     */
     public static boolean checkISBN13(String inputISBN) {
         int buffer = 0;
         if(inputISBN.length() < 13) {
@@ -117,9 +124,9 @@ public class ISBN {
 
     public String convert10to13() {
         try {
-        String bufferString = "978".concat(this.numberISBN10.substring(0, 9));
-        this.numberISBN13 = bufferString.concat(Integer.toString(ISBN.calcCheckDigit13(bufferString)));
-        return this.numberISBN13;
+            String bufferString = "978".concat(this.numberISBN10.substring(0, 9));
+            this.numberISBN13 = bufferString.concat(Integer.toString(ISBN.calcCheckDigit13(bufferString)));
+            return this.numberISBN13;
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
             System.out.println(e.getCause());
@@ -130,11 +137,11 @@ public class ISBN {
 
     public String convert13to10() {
         try {
-        if(this.numberISBN13.substring(0, 3).equals("978")) {
-            String bufferString = this.numberISBN13.substring(3, 12);
-            this.numberISBN10 = bufferString.concat(Integer.toString(ISBN.calcCheckDigit10(bufferString)));
-            return this.numberISBN10;
-        } else {
+            if(this.numberISBN13.substring(0, 3).equals("978")) {
+                String bufferString = this.numberISBN13.substring(3, 12);
+                this.numberISBN10 = bufferString.concat(Integer.toString(ISBN.calcCheckDigit10(bufferString)));
+                return this.numberISBN10;
+            } else {
                 return null;
             }
         } catch (IndexOutOfBoundsException e) {
@@ -147,7 +154,7 @@ public class ISBN {
     /** 
      * Calculates the check digit for ISBN-10 numbers.
      * @param       inputString     the number to calculate the check digit for
-     * @return      the check digit as a {@code char}
+     * @return      the check digit as a {@code char} and returns {@code '\0'} if the {@code String} is the wrong length
      */
     // TODO: check for edge cases
     public static char calcCheckDigit10(String inputString) {
@@ -167,9 +174,9 @@ public class ISBN {
     }
 
     /** 
-     * Calculates the check digit for ISBN-13 numbers.
+     * Calculates the check digit for ISBN-13 numbers. Since ISBN-13 is a subset of EAN13 this method is the same for both codes.
      * @param       inputString     the number to calculate the check digit for
-     * @return      the check digit as a {@code char}
+     * @return      {@code char} representation of the check digit or {@code '\0'} if the string has the wrong length or type 
      */
     public static char calcCheckDigit13(String inputString) {
         int sum = 0;
@@ -191,6 +198,5 @@ public class ISBN {
             System.out.println(e.getCause());
             return '\0';
         }
-        
     }
 }
