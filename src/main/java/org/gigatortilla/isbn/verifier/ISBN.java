@@ -116,17 +116,30 @@ public class ISBN {
     }
 
     public String convert10to13() {
+        try {
         String bufferString = "978".concat(this.numberISBN10.substring(0, 9));
         this.numberISBN13 = bufferString.concat(Integer.toString(ISBN.calcCheckDigit13(bufferString)));
         return this.numberISBN13;
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println(e.getCause());
+            return null;
+        }
+        
     }
 
     public String convert13to10() {
+        try {
         if(this.numberISBN13.substring(0, 3).equals("978")) {
             String bufferString = this.numberISBN13.substring(3, 12);
             this.numberISBN10 = bufferString.concat(Integer.toString(ISBN.calcCheckDigit10(bufferString)));
             return this.numberISBN10;
         } else {
+                return null;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println(e.getCause());
             return null;
         }
     }
@@ -162,7 +175,7 @@ public class ISBN {
         int sum = 0;
         int result;
 
-        // Ensure the array is accessed correctly to prevent an IndexOutOfBounds
+        // Ensure the array is accessed correctly to prevent an IndexOutOfBoundsException
         try {
             for(int i = 0; i < 12; i++) {
                 // Multiply the digit with its corresponding weight
@@ -175,6 +188,7 @@ public class ISBN {
             return (char) ('0' + (result == 10 ? 0 : result));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
+            System.out.println(e.getCause());
             return '\0';
         }
         
