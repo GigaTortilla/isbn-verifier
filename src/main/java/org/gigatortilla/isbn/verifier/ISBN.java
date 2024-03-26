@@ -1,5 +1,8 @@
 package org.gigatortilla.isbn.verifier;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * The {@code ISBN} class is an abstract representation of an ISBN-13 or an ISBN-10 number with its respective equivalent. 
  * The numbers can be converted between the different formats. 
@@ -60,37 +63,69 @@ public class ISBN {
         this.numberISBN13 = numberISBN13.substring(0, maxLen);
     }
 
+    // TODO: should exception handling be done in this method or in the final implementation?
     public void setISBN10state() {
-        this.validISBN10 = ISBN.checkISBN10(this.numberISBN10);
+        try {
+            this.validISBN10 = ISBN.checkISBN10(this.numberISBN10);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }
 
     public void setISBN13state() {
-        this.validISBN13 = ISBN.checkISBN13(this.numberISBN13);
+        try {
+            this.validISBN13 = ISBN.checkISBN13(this.numberISBN13);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }
 
-    // TODO: check for edge cases and add documentation
+    /**
+     * Checks whether or not the input string is a valid ISBN-10 number.
+     * @param inputISBN the input {@code String} to check
+     * @return {@code true} if the input {@code String} is valid, 
+     *         {@code false} if the input {@code String} is not a valid ISBN-13 number
+     * @throws IllegalArgumentException if the input string is less than 10 characters long, if it contains a non-numeric character 
+     *                                  which is different from {@code 'X'} or {@code 'x'}, or if the X is in the wrong position
+     */
     public static boolean checkISBN10(String inputISBN) {
-        int buffer = 0;
         if(inputISBN.length() < 10) {
-            System.out.println("The string " + inputISBN + " is too short!");
-            return false;
+            throw new IllegalArgumentException("The string " + inputISBN + " is less than 10 characters long!");
         }
 
-        if(inputISBN.substring(0, 10).contains("X")) {
-            if(inputISBN.indexOf('X') != 9) {
-                System.out.println("The string " + inputISBN + " is not a valid ISBN-10!");
-                return false;
+        Pattern invalidCharsPattern = Pattern.compile("[^0-9Xx]");
+        Matcher invalidCharsMatcher = invalidCharsPattern.matcher(inputISBN);
+        if(invalidCharsMatcher.find()) {
+            try {
+                throw new IllegalArgumentException("An invalid character was found in position: " + invalidCharsMatcher.start());
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+                throw new IllegalArgumentException("An invalid character was found! The position could not be retrieved!");
             }
         }
 
+        // No need to catch IndexOutOfBoundsException since at that point the string not be less than 10 characters long
+        if(inputISBN.substring(0, 10).contains("X") || inputISBN.substring(0, 10).contains("x")) {
+            if(inputISBN.indexOf('X') != 9 || inputISBN.indexOf('x') != 9) {
+                throw new IllegalArgumentException("The letter X was found in a position other than the last!");
+            }
+        }
+
+        int buffer = 0;
         for (int i = 0; i < inputISBN.substring(0, 10).length(); i++) {
             if(Character.isDigit(inputISBN.charAt(i))) {
                 buffer += (inputISBN.charAt(i) - '0') * (i + 1);
-            }else if(inputISBN.charAt(i) == 'X') {
+            } else if(inputISBN.charAt(i) == 'X' || inputISBN.charAt(i) == 'x') {
                 buffer += 100;
             }
         }
-
+        
         return buffer % 11 == 0;
     }
 
@@ -98,28 +133,21 @@ public class ISBN {
      * Checks if the input String is a valid ISBN-13 number.
      * @param inputISBN     the {@code String} to be checked 
      * @return              {@code true} if the input {@code String} is valid, 
-     *                      {@code false} if the input {@code String} is not a valid ISBN-13 number 
-     *                      or the {@code String} either is shorter than 3 digits or contains non-numeric characters
+     *                      {@code false} if the input {@code String} is not a valid ISBN-13 number
+     * @throws IllegalArgumentException if the input {@code String} is too short. If it is too long everything past the 10th character is not used.
+     * @throws NumberFormatException if the input {@code String} contains non-numeric characters.
      */
     public static boolean checkISBN13(String inputISBN) {
         int buffer = 0;
         if(inputISBN.length() < 13) {
-            System.out.println("The string " + inputISBN + " is too short!");
-            return false;
+            throw new IllegalArgumentException("The input string consists of less than 13 characters!");
         }
+        Long.parseLong(inputISBN);
 
-        // Check if the input contains only numbers
-        try {
-            Long.parseLong(inputISBN);
-
-            for(int i = 0; i < inputISBN.substring(0, 13).length(); i++) {
-                buffer += (inputISBN.charAt(i) - '0') * ((i % 2 == 0) ? 1 : 3);
-            }
-            return buffer % 10 == 0;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return false;
+        for(int i = 0; i < inputISBN.substring(0, 13).length(); i++) {
+            buffer += (inputISBN.charAt(i) - '0') * ((i % 2 == 0) ? 1 : 3);
         }
+        return buffer % 10 == 0;
     }
 
     public String convert10to13() {
@@ -168,7 +196,7 @@ public class ISBN {
                 weight--;
             }
             result = 11 - buffer % 11;
-            
+
             if(result == 10) {
                 return 'X';
             } else {
