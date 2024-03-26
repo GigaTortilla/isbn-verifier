@@ -156,20 +156,26 @@ public class ISBN {
      * @param       inputString     the number to calculate the check digit for
      * @return      the check digit as a {@code char} and returns {@code '\0'} if the {@code String} is the wrong length
      */
-    // TODO: check for edge cases
     public static char calcCheckDigit10(String inputString) {
-        int weight = 10;
-        int buffer = 0;
-        int result = 0;
-        for(char c : inputString.toCharArray()) {
-            buffer += weight * (c - '0');
-            weight--;
-        }
-        result = 11 - buffer % 11;
-        if(result == 10) {
-            return 'X';
+        if(inputString.length() != 10)
+        {
+            int weight = 10;
+            int buffer = 0;
+            int result = 0;
+
+            for(char c : inputString.toCharArray()) {
+                buffer += weight * (c - '0');
+                weight--;
+            }
+            result = 11 - buffer % 11;
+            
+            if(result == 10) {
+                return 'X';
+            } else {
+                return (char) ('0' + result);
+            }
         } else {
-            return (char) ('0' + result);
+            return '\0';
         }
     }
 
