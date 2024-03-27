@@ -63,26 +63,18 @@ public class ISBN {
         this.numberISBN13 = numberISBN13.substring(0, maxLen);
     }
 
+    /**
+     * Sets the state in the ISBN object if it contains a valid ISBN-10 number.
+     * @throws IllegalArgumentException if the input string is less than 10 characters long, if it contains a non-numeric character 
+     *                                  which is different from {@code 'X'} or {@code 'x'}, or if the X is in the wrong position
+     */
     // TODO: should exception handling be done in this method or in the final implementation?
     public void setISBN10state() {
-        try {
-            this.validISBN10 = ISBN.checkISBN10(this.numberISBN10);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+        this.validISBN10 = ISBN.checkISBN10(this.numberISBN10);
     }
 
     public void setISBN13state() {
-        try {
-            this.validISBN13 = ISBN.checkISBN13(this.numberISBN13);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
+        this.validISBN13 = ISBN.checkISBN13(this.numberISBN13);
     }
 
     /**
