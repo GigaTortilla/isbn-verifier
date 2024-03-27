@@ -21,11 +21,11 @@ public class ISBNwindow {
         public void actionPerformed(ActionEvent e) {
             mainWindowFrame.removeAll();
 
-            Button returnButton = new Button("Back");
-            Button checkButton = new Button("Check");
-            Label hintLabel = new Label("Please input the ISBN-10 number to check:", Label.LEFT);
-            TextField inputNumberField = new TextField(10);
             Label checkOutput = new Label("", Label.CENTER);
+            checkOutput.setBounds(50, 150, 250, 25);
+            
+            TextField inputNumberField = new TextField(10);
+            inputNumberField.setBounds(50, 110, 80, 25);
 
             // TODO: GUI representation of occured exceptions
             AbstractAction checkISBNAction = new AbstractAction() {
@@ -39,18 +39,19 @@ public class ISBNwindow {
                     }
                 }
             };
+            inputNumberField.addActionListener(checkISBNAction);
 
-            returnButton.setBounds(320, 250, 60, 30);
-            returnButton.setBackground(new Color(240, 240, 240));
-
+            Button checkButton = new Button("Check");
             checkButton.setBounds(140, 110, 80, 30);
             checkButton.setBackground(new Color(240, 240, 240));
             checkButton.addActionListener(checkISBNAction);
 
+            Button returnButton = new Button("Back");
+            returnButton.setBounds(320, 250, 60, 30);
+            returnButton.setBackground(new Color(240, 240, 240));
+
+            Label hintLabel = new Label("Please input the ISBN-10 number to check:", Label.LEFT);
             hintLabel.setBounds(50, 80, 250, 25);
-            checkOutput.setBounds(50, 150, 250, 25);
-            inputNumberField.setBounds(50, 110, 80, 25);
-            inputNumberField.addActionListener(checkISBNAction);
 
             returnButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -75,6 +76,7 @@ public class ISBNwindow {
 
             Label checkOutputLabel = new Label("", Label.CENTER);
             checkOutputLabel.setBounds(50, 150, 250, 25);
+
             TextField inputNumberField = new TextField(13);
             inputNumberField.setBounds(50, 110, 104, 25);
 
@@ -141,18 +143,21 @@ public class ISBNwindow {
         mainWindowFrame.removeAll();
         
         Label welcomeMessage = new Label("Welcome to the ISBN Verifier!");
-        TextField inField = new TextField();
-        Button submitButton = new Button("Submit");
-        Button buttonISBN10verify = new Button("ISBN-10");
-        Button buttonISBN13verify = new Button("ISBN-13");
-        
         welcomeMessage.setBounds(100, 70, 200, 30);
         welcomeMessage.setAlignment(Label.CENTER);
+
+        TextField inField = new TextField();
         inField.setBounds(120, 100, 80, 30);
+
+        Button submitButton = new Button("Submit");
         submitButton.setBounds(200, 100, 80, 30);
         submitButton.setBackground(new Color(240, 240, 240));
+
+        Button buttonISBN10verify = new Button("ISBN-10");
         buttonISBN10verify.setBounds(120, 180, 70, 30);
         buttonISBN10verify.setBackground(new Color(240, 240, 240));
+
+        Button buttonISBN13verify = new Button("ISBN-13");
         buttonISBN13verify.setBounds(200, 180, 70, 30);
         buttonISBN13verify.setBackground(new Color(240, 240, 240));
 
