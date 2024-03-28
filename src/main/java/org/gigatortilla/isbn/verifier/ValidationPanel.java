@@ -20,6 +20,10 @@ public class ValidationPanel extends JPanel {
         setPreferredSize(new Dimension(400, 300));
 
         int version = (isISBN13) ? 13 : 10;
+        JLabel enterMessage = new JLabel("Please enter the number to be checked for ISBN-" + version + " conformity:", JLabel.CENTER);
+        JLabel outputMessage = new JLabel("", JLabel.CENTER);
+        JTextField inputField = new JTextField(version);
+        JButton checkButton = new JButton("Check");
 
         AbstractAction returnToMenu = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
@@ -30,10 +34,15 @@ public class ValidationPanel extends JPanel {
             }
         };
 
-        JLabel enterMessage = new JLabel("Please enter the number to be checked for ISBN-" + version + " conformity:", JLabel.CENTER);
-        JLabel outputMessage = new JLabel("", JLabel.CENTER);
-        JTextField inputField = new JTextField(version);
-        JButton checkButton = new JButton("Check");
+        AbstractAction checkISBN = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                outputMessage.setText(generateMessage(inputField.getText(), isISBN13));
+            }
+        };
+
+        inputField.addActionListener(checkISBN);
+        checkButton.addActionListener(checkISBN);
+
         JButton backButton = new JButton("Back");
         backButton.addActionListener(returnToMenu);
         backButton.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -51,5 +60,35 @@ public class ValidationPanel extends JPanel {
         add(inputPanel);
         add(outputMessage);
         add(backBtnPanel);
+    }
+
+    private String generateMessage(String inputISBN, boolean isISBN13) {
+        if(isISBN13) {
+            try {
+                if(ISBN.checkISBN13(inputISBN)) {
+                    return "This ISBN-13 number is valid: " + inputISBN;
+                } else {
+                    return "Your input " + inputISBN + " is not a valid ISBN-13 number.";
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                return null;
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                return e.getMessage();
+            }
+        } else {
+            try {
+                if(ISBN.checkISBN10(inputISBN)) {
+                    return "This ISBN-10 number is valid: " + inputISBN;
+                } else {
+                    return "Your input " + inputISBN + " is not a valid ISBN-10 number.";
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                return e.getMessage();
+            }
+            
+        }
     }
 }
