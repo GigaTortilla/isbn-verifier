@@ -1,5 +1,7 @@
 package org.gigatortilla.isbn.verifier;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
@@ -8,12 +10,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class ValidationPanel extends JPanel {
     ValidationPanel(JPanel contentPane) {
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridLayout(4, 1, 5, 5));
+        setPreferredSize(new Dimension(400, 300));
 
         AbstractAction returnToMenu = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
@@ -30,6 +34,12 @@ public class ValidationPanel extends JPanel {
         JButton checkButton = new JButton("Check");
         JButton backButton = new JButton("Back");
         backButton.addActionListener(returnToMenu);
+        backButton.setHorizontalAlignment(SwingConstants.RIGHT);
+        backButton.setVerticalAlignment(SwingConstants.BOTTOM);
+
+        JPanel backBtnPanel = new JPanel();
+        backBtnPanel.add(backButton);
+        backBtnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(inputField);
@@ -38,6 +48,6 @@ public class ValidationPanel extends JPanel {
         add(enterMessage);
         add(inputPanel);
         add(outputMessage);
-        add(backButton);
+        add(backBtnPanel);
     }
 }
