@@ -14,10 +14,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class ValidationPanel extends JPanel {
-    ValidationPanel(JPanel contentPane) {
+    ValidationPanel(JPanel contentPane, boolean isISBN13) {
         setBorder(new EmptyBorder(10, 10, 10, 10));
         setLayout(new GridLayout(4, 1, 5, 5));
         setPreferredSize(new Dimension(400, 300));
+
+        int version = (isISBN13) ? 13 : 10;
 
         AbstractAction returnToMenu = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
@@ -28,9 +30,9 @@ public class ValidationPanel extends JPanel {
             }
         };
 
-        JLabel enterMessage = new JLabel("Please enter the number to be checked for ISBN-10 conformity:", JLabel.CENTER);
+        JLabel enterMessage = new JLabel("Please enter the number to be checked for ISBN-" + version + " conformity:", JLabel.CENTER);
         JLabel outputMessage = new JLabel("", JLabel.CENTER);
-        JTextField inputField = new JTextField(10);
+        JTextField inputField = new JTextField(version);
         JButton checkButton = new JButton("Check");
         JButton backButton = new JButton("Back");
         backButton.addActionListener(returnToMenu);

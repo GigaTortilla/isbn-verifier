@@ -18,8 +18,14 @@ public class MainMenu extends JPanel {
         AbstractAction switchToValidationWindow = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 contentPane.setVisible(false);
-                contentPane.removeAll();
-                contentPane.add(new ValidationPanel(contentPane));
+                if(e.getActionCommand() == "Verify ISBN-10") {
+                    contentPane.removeAll();
+                    contentPane.add(new ValidationPanel(contentPane, false));
+                }
+                if(e.getActionCommand() == "Verify ISBN-13") {
+                    contentPane.removeAll();
+                    contentPane.add(new ValidationPanel(contentPane, true));
+                }
                 contentPane.setVisible(true);
             }
         };
@@ -28,6 +34,7 @@ public class MainMenu extends JPanel {
         JButton validateButton10 = new JButton("Verify ISBN-10");
         validateButton10.addActionListener(switchToValidationWindow);
         JButton validateButton13 = new JButton("Verify ISBN-13");
+        validateButton13.addActionListener(switchToValidationWindow);
         JPanel btnPanel = new JPanel();
         FlowLayout btnPanelLayout = (FlowLayout) btnPanel.getLayout();
         btnPanelLayout.setHgap(20);
