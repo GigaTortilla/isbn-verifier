@@ -97,6 +97,10 @@ public class ISBN_10 extends ISBN {
         }
     }
 
+    /**
+     * Converts the ISBN_13 object to an ISBN_10 object if the starting object contains a valid ISBN-13
+     * @return  the resulting ISBN_10 object, {@code null} if the ISBN-13 is not valid
+     */
     public ISBN_13 convertToISBN_13() {
         if(this.isValid) {
             String bufferString = "978".concat(this.isbn.substring(0, 9));
