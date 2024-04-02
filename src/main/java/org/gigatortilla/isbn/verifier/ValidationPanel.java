@@ -5,12 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class ValidationPanel extends JPanel {
@@ -65,7 +60,7 @@ public class ValidationPanel extends JPanel {
     private String generateMessage(String inputISBN, boolean isISBN13) {
         if(isISBN13) {
             try {
-                if(ISBN.checkISBN13(inputISBN)) {
+                if(ISBN_13.check(inputISBN)) {
                     return "This ISBN-13 number is valid: " + inputISBN;
                 } else {
                     return "Your input " + inputISBN + " is not a valid ISBN-13 number.";
@@ -79,7 +74,7 @@ public class ValidationPanel extends JPanel {
             }
         } else {
             try {
-                if(ISBN.checkISBN10(inputISBN)) {
+                if(ISBN_10.check(inputISBN)) {
                     return "This ISBN-10 number is valid: " + inputISBN;
                 } else {
                     return "Your input " + inputISBN + " is not a valid ISBN-10 number.";
