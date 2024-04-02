@@ -7,12 +7,12 @@ public class ISBN_13 extends ISBN {
 
     ISBN_13(String isbn) {
         super();
-        this.isbn = isbn;
+        this.isbn = isbn.substring(0, (isbn.length() < 13) ? isbn.length() : 13);
     }
 
     ISBN_13(String isbn, boolean isValid) {
         super();
-        this.isbn = isbn;
+        this.isbn = isbn.substring(0, (isbn.length() < 13) ? isbn.length() : 13);
         this.isValid = isValid;
     }
 

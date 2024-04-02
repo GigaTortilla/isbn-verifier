@@ -10,12 +10,12 @@ public class ISBN_10 extends ISBN {
 
     ISBN_10(String isbn) {
         super();
-        this.isbn = isbn;
+        this.isbn = isbn.substring(0, (isbn.length() < 10) ? isbn.length() : 10);
     }
 
     ISBN_10(String isbn, boolean isValid) {
         super();
-        this.isbn = isbn;
+        this.isbn = isbn.substring(0, (isbn.length() < 10) ? isbn.length() : 10);
         this.isValid = isValid;
     }
 
